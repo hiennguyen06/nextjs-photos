@@ -24,6 +24,7 @@
 .DS_Store
 *.pem
 notes.txt
+.cursorrules
 
 # debug
 npm-debug.log*
