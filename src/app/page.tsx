@@ -2,7 +2,7 @@ import cloudinary from "./utils/cloudinary";
 import Image from "next/image";
 
 interface ImageProps {
-  id: string;
+  id: number;
   height: number;
   width: number;
   format: string;
@@ -13,21 +13,21 @@ const Home = async () => {
   const images = await getImagesFromCloudinary();
   console.log(images);
   return (
-    <main>
+    <main className="py-4">
       <div className="container mx-auto max-w-7xl">
-        <div className="columns-1 md:columns-3 lg:columns-4 gap-4 [column-fill:_balance]">
+        <div className="columns-1 md:columns-3 lg:columns-4 gap-4">
           {images.map((image: ImageProps) => (
-            <Image
-              key={image.id}
-              src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/q_auto,f_auto,c_scale,w_720/${image.public_id}.${image.format}`}
-              alt={image.public_id}
-              width={image.width}
-              height={image.height}
-              sizes="(max-width: 640px) 100vw,
-                  (max-width: 1280px) 50vw,
-                  (max-width: 1536px) 33vw,
-                  25vw"
-            />
+            <div key={image.id} className="break-inside-avoid mb-4">
+              <Image
+                src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/q_auto,f_auto,c_scale,w_720/${image.public_id}.${image.format}`}
+                alt={image.public_id}
+                width={image.width}
+                height={image.height}
+                className="w-full"
+                loading="lazy"
+                sizes="(max-width: 640px) 100vw, (max-width: 1280px) 33vw, 25vw"
+              />
+            </div>
           ))}
         </div>
       </div>
@@ -48,16 +48,29 @@ const getImagesFromCloudinary = async () => {
   return transformedData;
 };
 
-const transformImageData = (results: any) => {
-  return results.resources.map((resource: any, index: number) => {
-    return {
-      id: index,
-      height: resource.height,
-      width: resource.width,
-      format: resource.format,
-      public_id: resource.public_id,
-    };
-  });
+interface CloudinaryResource {
+  height: number;
+  width: number;
+  format: string;
+  public_id: string;
+}
+
+interface CloudinaryResults {
+  resources: CloudinaryResource[];
+}
+
+const transformImageData = (results: CloudinaryResults) => {
+  return results.resources.map(
+    (resource: CloudinaryResource, index: number) => {
+      return {
+        id: index,
+        height: resource.height,
+        width: resource.width,
+        format: resource.format,
+        public_id: resource.public_id,
+      };
+    }
+  );
 };
 
 export default Home;
