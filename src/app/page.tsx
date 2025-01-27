@@ -19,7 +19,6 @@ const getImagesFromCloudinary = async () => {
   const results = await getResults();
 
   const reduecedResults = await transformImageData(results.resources);
-
   return reduecedResults;
 };
 
