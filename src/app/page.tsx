@@ -1,13 +1,7 @@
 import cloudinary from "./utils/cloudinary";
 import Image from "next/image";
-
-interface ImageProps {
-  id: number;
-  height: number;
-  width: number;
-  format: string;
-  public_id: string;
-}
+import getBase64ImageUrl from "./utils/generateBlurPlaceholder";
+import ImageProps from "./utils/types";
 
 const Home = async () => {
   const images = await getImagesFromCloudinary();
@@ -25,6 +19,8 @@ const Home = async () => {
                 height={image.height}
                 className="w-full"
                 loading="lazy"
+                placeholder="blur"
+                blurDataURL={image.blurDataUrl}
                 sizes="(max-width: 640px) 100vw, (max-width: 1280px) 33vw, 25vw"
               />
             </div>
@@ -43,34 +39,33 @@ const getImagesFromCloudinary = async () => {
     .with_field("tags")
     .execute();
 
-  const transformedData = transformImageData(results);
+  const reduecedResults = await transformImageData(results.resources);
 
-  return transformedData;
+  return reduecedResults;
 };
 
-interface CloudinaryResource {
-  height: number;
-  width: number;
-  format: string;
-  public_id: string;
-}
-
-interface CloudinaryResults {
-  resources: CloudinaryResource[];
-}
-
-const transformImageData = (results: CloudinaryResults) => {
-  return results.resources.map(
-    (resource: CloudinaryResource, index: number) => {
-      return {
+const transformImageData = async (results: Array<ImageProps>) => {
+  const transformedData = await Promise.all(
+    results.map(async (resource: ImageProps, index: number) => {
+      const imageData: ImageProps = {
         id: index,
         height: resource.height,
         width: resource.width,
         format: resource.format,
         public_id: resource.public_id,
       };
-    }
+
+      // Generate blur placeholder
+      const blurDataUrl = await getBase64ImageUrl(imageData);
+
+      return {
+        ...imageData,
+        blurDataUrl,
+      };
+    })
   );
+
+  return transformedData;
 };
 
 export default Home;
