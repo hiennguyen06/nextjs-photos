@@ -8,10 +8,10 @@ interface ImageContainerProps {
 }
 
 export default function ImageContainer({ image }: ImageContainerProps) {
-  const imageUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/q_auto,f_auto,c_scale,w_720/${image.public_id}.${image.format}`;
+  const imageUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/q_auto:best,f_auto,c_limit,w_1280,dpr_auto/${image.public_id}.${image.format}`;
 
   return (
-    <Link href={`/photos/${image.id}`} shallow>
+    <Link className="block mb-4" href={`/photos/${image.id}`} shallow>
       <Image
         src={imageUrl}
         alt={image.public_id}
@@ -21,7 +21,7 @@ export default function ImageContainer({ image }: ImageContainerProps) {
         loading="lazy"
         placeholder="blur"
         blurDataURL={image.blurDataUrl}
-        sizes="(max-width: 640px) 100vw, (max-width: 1280px) 33vw, 25vw"
+        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
       />
     </Link>
   );
