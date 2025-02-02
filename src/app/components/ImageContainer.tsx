@@ -11,7 +11,12 @@ export default function ImageContainer({ image }: ImageContainerProps) {
   const imageUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/q_auto:best,f_auto,c_limit,w_1280,dpr_auto/${image.public_id}.${image.format}`;
 
   return (
-    <Link className="block mb-2" href={`/photos/${image.id}`} passHref>
+    <Link
+      className="block mb-2"
+      href={`/photos/${image.id}`}
+      shallow
+      scroll={false}
+    >
       <Image
         src={imageUrl}
         alt={image.public_id}
