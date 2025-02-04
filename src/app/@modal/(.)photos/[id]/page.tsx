@@ -8,15 +8,19 @@ export default async function PhotoModal({
   params: Promise<{ id: string }>;
 }) {
   const results = await getResults();
-  const photoId = (await params).id;
-  const image = results.resources[photoId];
+  const currentPhotoId = (await params).id;
+  const image = results.resources[currentPhotoId];
+  const totalImages = results.resources.length;
 
   const blurDataUrl = await getBase64ImageUrl(image);
   const enhancedImage = {
-    ...image,
-    id: parseInt(photoId),
+    width: image.width,
+    height: image.height,
+    format: image.format,
+    id: parseInt(currentPhotoId),
+    public_id: image.public_id,
     blurDataUrl,
   };
 
-  return <Modal image={enhancedImage} />;
+  return <Modal image={enhancedImage} totalImages={totalImages} />;
 }

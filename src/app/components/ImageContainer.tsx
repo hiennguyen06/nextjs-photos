@@ -12,7 +12,7 @@ export default function ImageContainer({ image }: ImageContainerProps) {
 
   return (
     <Link
-      className="block mb-2"
+      className="block mb-4"
       href={`/photos/${image.id}`}
       shallow
       scroll={false}

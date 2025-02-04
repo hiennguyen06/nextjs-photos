@@ -15,8 +15,7 @@ export default async function PhotoPage({
 
   return (
     <div className="h-screen flex items-center justify-center p-4">
-      <h1>Photos Page</h1>
-      <div className="page max-h-[90vh] w-auto relative">
+      <div className="max-h-[90vh] w-auto relative">
         <Image
           src={imageUrl}
           alt={image.public_id}
