@@ -14,6 +14,7 @@ export default async function getResults() {
       .sort_by("public_id", "desc")
       .max_results(100)
       .with_field("tags")
+      .with_field("context")
       .execute();
 
     // Store in cache for future use

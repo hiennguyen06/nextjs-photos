@@ -18,8 +18,8 @@ const Home = async () => {
 const getImagesFromCloudinary = async () => {
   const results = await getResults();
 
-  const reduecedResults = await transformImageData(results.resources);
-  return reduecedResults;
+  const reducedResults = await transformImageData(results.resources);
+  return reducedResults;
 };
 
 const transformImageData = async (results: Array<ImageProps>) => {

@@ -47,12 +47,12 @@ export default function Modal({ image, totalImages }: ModalProps) {
   return (
     <main
       ref={overlay}
-      className="fixed w-full  h-screen px-4 inset-0 z-10 bg-white flex justify-center items-center gap-4 overflow-hidden"
+      className="fixed w-full  h-screen px-4 inset-0 z-10 bg-white flex justify-center max-md:flex-col  items-center gap-4 max-md:gap-0 overflow-hidden"
       onClick={handleModalClose}
     >
       <button
         onClick={onModalClose}
-        className="absolute top-4 right-4 rounded-full p-2"
+        className="absolute max-md:static max-md:self-end top-4 right-4 rounded-full p-2"
       >
         <svg
           width="32"
@@ -68,7 +68,7 @@ export default function Modal({ image, totalImages }: ModalProps) {
         </svg>
       </button>
       <button
-        className={`p-4 rounded-full bg-transparent flex justify-center items-center ${
+        className={`p-4 rounded-full bg-transparent flex justify-center items-center max-md:hidden ${
           image.id === 0 ? "opacity-40 pointer-events-none" : ""
         }`}
         onClick={() => handlePreviousPhoto()}
@@ -86,20 +86,61 @@ export default function Modal({ image, totalImages }: ModalProps) {
         </svg>
       </button>
 
-      <div className="relative flex justify-center items-center overflow-hidden w-full h-[auto]">
+      <div className="relative flex flex-col justify-center gap-4 items-center overflow-hidden w-full h-[auto]">
         <Image
           src={imageUrl}
           alt={image.public_id}
           width={image.width}
           height={image.height}
-          className="max-h-[90vh] w-auto object-contain"
+          className="max-h-[75vh] w-auto object-contain"
           placeholder="blur"
           blurDataURL={image.blurDataUrl}
           priority
         />
+        <p className=" text-gray-500 text-center">{image.alt}</p>
       </div>
+
+      <div className="hidden max-md:flex justify-between w-full mt-auto">
+        <button
+          className={`p-4 rounded-full bg-transparent flex justify-center items-center ${
+            image.id === 0 ? "opacity-40 pointer-events-none" : ""
+          }`}
+          onClick={() => handlePreviousPhoto()}
+        >
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill="currentColor"
+              d="m7.825 13l5.6 5.6L12 20l-8-8l8-8l1.425 1.4l-5.6 5.6H20v2z"
+            />
+          </svg>
+        </button>
+        <button
+          className={`p-4 rounded-full bg-transparent flex justify-center items-center  ${
+            image.id === totalImages - 1 ? "opacity-40 pointer-events-none" : ""
+          }`}
+          onClick={() => handleNextPhoto()}
+        >
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill="currentColor"
+              d="M16.175 13H4v-2h12.175l-5.6-5.6L12 4l8 8l-8 8l-1.425-1.4z"
+            />
+          </svg>
+        </button>
+      </div>
+
       <button
-        className={`p-4 rounded-full bg-transparent flex justify-center items-center ${
+        className={`p-4 rounded-full bg-transparent flex justify-center items-center max-md:hidden ${
           image.id === totalImages - 1 ? "opacity-40 pointer-events-none" : ""
         }`}
         onClick={() => handleNextPhoto()}
