@@ -10,15 +10,52 @@ interface ModalProps {
 }
 
 export default function Modal({ image, totalImages }: ModalProps) {
-  console.log(image);
   const overlay = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const touchStart = useRef<number>(0);
+  const touchEnd = useRef<number>(0);
+  const minSwipeDistance = 50;
 
   const imageUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/q_auto:best,f_auto,c_limit,w_1280,dpr_auto/${image.public_id}.${image.format}`;
 
   const onModalClose = useCallback(() => {
     router.back();
   }, [router]);
+
+  const handlePreviousPhoto = useCallback(() => {
+    router.replace(`/photos/${image.id - 1}`, { scroll: false });
+  }, [router, image.id]);
+
+  const handleNextPhoto = useCallback(() => {
+    router.replace(`/photos/${image.id + 1}`, { scroll: false });
+  }, [router, image.id]);
+
+  // Touch handlers for swipe
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStart.current = e.touches[0].clientX;
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    touchEnd.current = e.touches[0].clientX;
+  };
+
+  const onTouchEnd = () => {
+    const swipeDistance = touchStart.current - touchEnd.current;
+
+    if (Math.abs(swipeDistance) < minSwipeDistance) return;
+
+    if (swipeDistance > 0) {
+      // Swiped left, go to next photo
+      if (image.id !== totalImages - 1) {
+        handleNextPhoto();
+      }
+    } else {
+      // Swiped right, go to previous photo
+      if (image.id !== 0) {
+        handlePreviousPhoto();
+      }
+    }
+  };
 
   const handleModalClose = useCallback(
     (e: React.MouseEvent) => {
@@ -36,19 +73,45 @@ export default function Modal({ image, totalImages }: ModalProps) {
     };
   }, []);
 
-  const handlePreviousPhoto = useCallback(() => {
-    router.replace(`/photos/${image.id - 1}`, { scroll: false });
-  }, [router, image.id]);
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      switch (e.key) {
+        case "Escape":
+          onModalClose();
+          break;
+        case "ArrowLeft":
+          if (image.id !== 0) {
+            handlePreviousPhoto();
+          }
+          break;
+        case "ArrowRight":
+          if (image.id !== totalImages - 1) {
+            handleNextPhoto();
+          }
+          break;
+      }
+    };
 
-  const handleNextPhoto = useCallback(() => {
-    router.replace(`/photos/${image.id + 1}`, { scroll: false });
-  }, [router, image.id]);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [
+    onModalClose,
+    handlePreviousPhoto,
+    handleNextPhoto,
+    image.id,
+    totalImages,
+  ]);
 
   return (
     <main
       ref={overlay}
       className="fixed w-full  h-screen px-4 inset-0 z-10 bg-white flex justify-center max-md:flex-col  items-center gap-4 max-md:gap-0 overflow-hidden"
       onClick={handleModalClose}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
     >
       <button
         onClick={onModalClose}
