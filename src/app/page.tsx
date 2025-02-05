@@ -2,13 +2,14 @@ import getBase64ImageUrl from "./utils/generateBlurPlaceholder";
 import ImageProps from "./utils/types";
 import getResults from "./utils/cachedResults";
 import ImageGallery from "./components/ImageGallery";
-
+import Header from "./components/Header";
 const Home = async () => {
   const images = await getImagesFromCloudinary();
   console.log(images);
   return (
-    <main className="py-4">
-      <div className="container mx-auto max-w-7xl">
+    <main className="px-4 container mx-auto max-w-7xl">
+      <Header />
+      <div>
         <ImageGallery images={images} />
       </div>
     </main>

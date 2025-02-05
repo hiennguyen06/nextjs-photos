@@ -97,7 +97,9 @@ export default function Modal({ image, totalImages }: ModalProps) {
           blurDataURL={image.blurDataUrl}
           priority
         />
-        <p className=" text-gray-500 text-center">{image.alt}</p>
+        <p className=" text-gray-500 text-center font-inconsolata">
+          {image.alt}
+        </p>
       </div>
 
       <div className="hidden max-md:flex justify-between w-full mt-auto">
