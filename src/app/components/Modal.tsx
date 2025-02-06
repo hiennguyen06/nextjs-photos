@@ -107,7 +107,7 @@ export default function Modal({ image, totalImages }: ModalProps) {
   return (
     <main
       ref={overlay}
-      className="fixed w-full  h-screen px-4 inset-0 z-10 bg-white flex justify-center max-md:flex-col  items-center gap-4 max-md:gap-0 overflow-hidden"
+      className="fixed w-full h-dvh px-4 max-md:px-0 inset-0 z-10 bg-white flex justify-center max-md:flex-col  items-center gap-4 max-md:gap-0 overflow-hidden"
       onClick={handleModalClose}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
@@ -155,7 +155,7 @@ export default function Modal({ image, totalImages }: ModalProps) {
           alt={image.public_id}
           width={image.width}
           height={image.height}
-          className="max-h-[75vh] w-auto object-contain"
+          className="max-h-[75vh] w-full object-contain"
           placeholder="blur"
           blurDataURL={image.blurDataUrl}
           priority
