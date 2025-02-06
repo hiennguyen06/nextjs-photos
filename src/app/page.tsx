@@ -9,9 +9,7 @@ const Home = async () => {
   return (
     <main className="px-4 container mx-auto max-w-7xl">
       <Header />
-      <div>
-        <ImageGallery images={images} />
-      </div>
+      <ImageGallery images={images} />
     </main>
   );
 };
