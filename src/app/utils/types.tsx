@@ -7,4 +7,5 @@ export default interface ImageProps {
   blurDataUrl?: string;
   title?: string;
   alt?: string;
+  tags?: string[];
 }

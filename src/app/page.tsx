@@ -3,13 +3,18 @@ import ImageProps from "./utils/types";
 import getResults from "./utils/cachedResults";
 import ImageGallery from "./components/ImageGallery";
 import Header from "./components/Header";
-const Home = async () => {
+const Home = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ tag?: string }>;
+}) => {
   const images = await getImagesFromCloudinary();
-  console.log(images);
+  const tag = (await searchParams).tag;
+
   return (
     <main className="px-4 container mx-auto max-w-7xl">
       <Header />
-      <ImageGallery images={images} />
+      <ImageGallery images={images} selectedTag={tag} />
     </main>
   );
 };
@@ -30,6 +35,7 @@ const transformImageData = async (results: Array<ImageProps>) => {
         width: resource.width,
         format: resource.format,
         public_id: resource.public_id,
+        tags: resource.tags,
       };
 
       // Generate blur placeholder
