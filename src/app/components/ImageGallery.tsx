@@ -1,6 +1,7 @@
 import ImageProps from "../utils/types";
 import ImageContainer from "./ImageContainer";
 import TagFilters from "./TagFilters";
+
 interface ImageGalleryProps {
   images: ImageProps[];
   selectedTag?: string | undefined;
@@ -29,7 +30,12 @@ export default function ImageGallery({
       <TagFilters allTags={allTags} selectedTag={selectedTag} />
       <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
         {filteredImages.map((image) => (
-          <ImageContainer key={image.id} image={image} />
+          <div
+            key={image.id}
+            className="transform transition-all duration-300 ease-out"
+          >
+            <ImageContainer image={image} />
+          </div>
         ))}
       </div>
     </>
