@@ -19,6 +19,7 @@ export default function Modal({ image, totalImages }: ModalProps) {
   const imageUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/q_auto:best,f_auto,c_limit,w_1280,dpr_auto/${image.public_id}.${image.format}`;
 
   const onModalClose = useCallback(() => {
+    document.body.style.overflow = "auto";
     router.back();
   }, [router]);
 
@@ -73,8 +74,8 @@ export default function Modal({ image, totalImages }: ModalProps) {
     };
   }, []);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
       switch (e.key) {
         case "Escape":
           onModalClose();
@@ -90,19 +91,16 @@ export default function Modal({ image, totalImages }: ModalProps) {
           }
           break;
       }
-    };
+    },
+    [onModalClose, handlePreviousPhoto, handleNextPhoto, image.id, totalImages]
+  );
 
+  useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [
-    onModalClose,
-    handlePreviousPhoto,
-    handleNextPhoto,
-    image.id,
-    totalImages,
-  ]);
+  }, [handleKeyDown]);
 
   return (
     <main
