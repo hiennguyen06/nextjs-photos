@@ -3,7 +3,7 @@ import profilePicture from "/public/hn-profile.webp";
 
 export default function Header() {
   return (
-    <header className="flex flex-col items-center gap-8 pt-12 pb-4">
+    <header className="flex flex-col items-center gap-8 pt-12 pb-6">
       <Image
         src={profilePicture}
         alt="Hien's logo"

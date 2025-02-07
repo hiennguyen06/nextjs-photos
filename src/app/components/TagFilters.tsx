@@ -33,7 +33,7 @@ export default function TagFilters({ allTags, selectedTag }: TagFiltersProps) {
   );
 
   return (
-    <div className="relative py-4 flex flex-wrap justify-center gap-2">
+    <div className="relative pb-6 flex flex-wrap justify-center gap-2">
       {allTags.map((tag) => (
         <button
           key={tag}

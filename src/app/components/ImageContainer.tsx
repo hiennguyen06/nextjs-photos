@@ -12,7 +12,8 @@ export default function ImageContainer({ image }: ImageContainerProps) {
 
   return (
     <Link
-      className="block mb-4"
+      className="block hover:border-spacing-1 border-black
+ transition-opacity duration-300 ease-out"
       href={`/photos/${image.id}`}
       shallow
       scroll={false}
@@ -23,7 +24,7 @@ export default function ImageContainer({ image }: ImageContainerProps) {
         width={image.width}
         height={image.height}
         className="w-full"
-        loading="lazy"
+        loading={image.id < 8 ? "eager" : "lazy"}
         placeholder="blur"
         blurDataURL={image.blurDataUrl}
         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"

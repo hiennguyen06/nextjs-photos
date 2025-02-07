@@ -24,18 +24,17 @@ export default function ImageGallery({
     ? images.filter((image) => image.tags?.includes(selectedTag))
     : images;
 
-  console.log(allTags);
   return (
     <>
       <TagFilters allTags={allTags} selectedTag={selectedTag} />
-      <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
         {filteredImages.map((image) => (
-          <div
+          <figure
             key={image.id}
             className="transform transition-all duration-300 ease-out"
           >
             <ImageContainer image={image} />
-          </div>
+          </figure>
         ))}
       </div>
     </>
