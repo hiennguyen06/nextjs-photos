@@ -23,9 +23,9 @@ export default function TagFilters({ allTags, selectedTag }: TagFiltersProps) {
       // Update the URL in a transition
       startTransition(() => {
         if (optimisticSelectedTag === tag) {
-          router.replace("/", { scroll: false });
+          router.push("/", { scroll: false });
         } else {
-          router.replace(`?tag=${encodeURIComponent(tag)}`, { scroll: false });
+          router.push(`?tag=${encodeURIComponent(tag)}`, { scroll: false });
         }
       });
     },

@@ -19,7 +19,6 @@ export default function Modal({ image, totalImages }: ModalProps) {
   const imageUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/q_auto:best,f_auto,c_limit,w_1280,dpr_auto/${image.public_id}.${image.format}`;
 
   const onModalClose = useCallback(() => {
-    document.body.style.overflow = "auto";
     router.back();
   }, [router]);
 
