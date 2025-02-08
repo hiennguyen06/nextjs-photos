@@ -112,6 +112,10 @@ export default function Modal({ image, totalImages }: ModalProps) {
     >
       <button
         onClick={onModalClose}
+        onTouchEnd={(e) => {
+          e.preventDefault();
+          onModalClose();
+        }}
         className="absolute max-md:static max-md:self-end top-4 right-4 rounded-full p-2"
       >
         <svg
@@ -184,6 +188,10 @@ export default function Modal({ image, totalImages }: ModalProps) {
             image.id === totalImages - 1 ? "opacity-40 pointer-events-none" : ""
           }`}
           onClick={() => handleNextPhoto()}
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            handleNextPhoto();
+          }}
         >
           <svg
             width="32"
