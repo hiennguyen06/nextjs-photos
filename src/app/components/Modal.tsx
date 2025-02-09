@@ -20,14 +20,43 @@ export default function Modal({ image, totalImages }: ModalProps) {
   const imageUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/q_auto:best,f_auto,c_limit,w_1280,dpr_auto/${image.public_id}.${image.format}`;
 
   const onModalClose = useCallback(() => {
-    router.back();
+    if (overlay.current) {
+      overlay.current.ontouchstart = null;
+      overlay.current.ontouchmove = null;
+      overlay.current.ontouchend = null;
+    }
+
+    touchStart.current = 0;
+    touchEnd.current = 0;
+
+    setTimeout(() => {
+      router.back();
+    }, 0);
   }, [router]);
 
   const handlePreviousPhoto = useCallback(() => {
+    touchStart.current = 0;
+    touchEnd.current = 0;
+
+    if (overlay.current) {
+      overlay.current.ontouchstart = null;
+      overlay.current.ontouchmove = null;
+      overlay.current.ontouchend = null;
+    }
+
     router.replace(`/photos/${image.id - 1}`, { scroll: false });
   }, [router, image.id]);
 
   const handleNextPhoto = useCallback(() => {
+    touchStart.current = 0;
+    touchEnd.current = 0;
+
+    if (overlay.current) {
+      overlay.current.ontouchstart = null;
+      overlay.current.ontouchmove = null;
+      overlay.current.ontouchend = null;
+    }
+
     router.replace(`/photos/${image.id + 1}`, { scroll: false });
   }, [router, image.id]);
 
