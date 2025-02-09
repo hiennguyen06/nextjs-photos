@@ -12,7 +12,7 @@ const Home = async ({
   const tag = (await searchParams).tag;
 
   return (
-    <main className="px-4 container mx-auto max-w-7xl">
+    <main className="px-4 container mx-auto max-w-screen-2xl">
       <Header />
       <ImageGallery images={images} selectedTag={tag} />
     </main>

@@ -10,7 +10,6 @@ export default async function PhotoModal({
   const results = await getResults();
   const currentPhotoId = (await params).id;
   const image = results.resources[currentPhotoId];
-  console.log(image);
   const totalImages = results.resources.length;
 
   const blurDataUrl = await getBase64ImageUrl(image);

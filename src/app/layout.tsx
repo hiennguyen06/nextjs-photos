@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable}  ${inconsolata.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable}  ${inconsolata.variable} antialiased user-select-none`}
       >
         {children}
         {modal}

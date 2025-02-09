@@ -15,13 +15,13 @@ export default async function PhotoPage({
 
   return (
     <div className="h-screen flex items-center justify-center p-4">
-      <div className="max-h-[90vh] w-auto relative">
+      <div className="max-h-[75vh] w-auto relative">
         <Image
           src={imageUrl}
           alt={image.public_id}
           width={image.width}
           height={image.height}
-          className="max-h-[90vh] w-auto object-contain"
+          className="max-h-[75vh] w-auto object-contain"
           blurDataURL={blurDataUrl}
           placeholder="blur"
           priority
